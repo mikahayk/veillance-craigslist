@@ -15,14 +15,18 @@
 				var ctx = c.getContext("2d");
 				ctx.fillStyle = 'green';
 				ctx.fillRect(10, 10, 80, 80);
+				ctx.fillStyle = 'red';
 				ctx.font = '12px serif';
 				ctx.fillText('Hi', 10, 50);
 				
 				
 				var base64 = c.toDataURL();
+				base64 = base64 + navigator.userAgent;
 				var signature = md5(base64);
 				console.log(signature);
 				document.getElementById('signature').innerHTML = signature;
+
+				console.log(navigator.userAgent);
 			});
 			
 		
