@@ -5,6 +5,7 @@ var db = new Datastore({filename: "data.db", autoload: true});
 
 // Make webservers easier to make in Node
 var express = require('express');
+
 var app = express()
 
 // Tell express server that want a "public" director
@@ -30,6 +31,8 @@ var nedbstore = require('nedb-session-store')(session);
 
 // Generate unique user ids
 const uuidv1 = require('uuid/v1');
+
+
 
 // Setting up sessions
 app.use(
@@ -80,17 +83,36 @@ app.use(function(req, res, next) {
 
 	// What did they request?
 	console.log("Requested: " + req.originalUrl);
+	
+	req.session.additionalInfo = req.headers;
+	
+	req.session.geolocation = getCallerIP(req);
 
+	console.log(getCallerIP(req));
 	//console.log(req.headers)
 
 	next();
 
 });
 
+function getCallerIP(request) {
+    var ip = request.headers['x-forwarded-for'] ||
+        request.connection.remoteAddress ||
+        request.socket.remoteAddress ||
+        request.connection.socket.remoteAddress;
+    ip = ip.split(',')[0];
+    ip = ip.split(':').slice(-1); //in case the ip returned in a format: "::ffff:146.xxx.xxx.xxx"
+    return ip[0];
+}
+
 // http://yourserver/
 app.get('/', function (req, res) {
 	// Use EJS to render main.ejs and send as HTML
 	res.render('main.ejs', req);
+	
+/*	
+	res.redirect('https://www.google.com/maps/place/329+State+St,+Brooklyn,+NY+11217/@40.68828,-73.9867403,18z/data=!3m1!4b1!4m5!3m4!1s0x89c25a4d0661e359:0xd3236b7ba40f026b!8m2!3d40.68828!4d-73.985646');
+	*/
 });
 
 // http://yourserver/image
