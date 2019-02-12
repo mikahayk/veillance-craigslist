@@ -5,10 +5,7 @@ var db = new Datastore({filename: "data.db", autoload: true});
 
 // Make webservers easier to make in Node
 var express = require('express');
-<<<<<<< HEAD
 
-=======
->>>>>>> 9d1db752392a224f8a6b6134a1bd3ee754a5f5ef
 var app = express()
 
 // Tell express server that want a "public" director
@@ -35,11 +32,6 @@ var nedbstore = require('nedb-session-store')(session);
 // Generate unique user ids
 const uuidv1 = require('uuid/v1');
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 9d1db752392a224f8a6b6134a1bd3ee754a5f5ef
 // Setting up sessions
 app.use(
 	session(
@@ -91,21 +83,18 @@ app.use(function(req, res, next) {
 	console.log("Requested: " + req.originalUrl);
 	
 	req.session.additionalInfo = req.headers;
-<<<<<<< HEAD
 	
 	req.session.geolocation = getCallerIP(req);
 
 	console.log(getCallerIP(req));
-=======
 
->>>>>>> 9d1db752392a224f8a6b6134a1bd3ee754a5f5ef
 	//console.log(req.headers)
 
 	next();
 
 });
 
-<<<<<<< HEAD
+
 function getCallerIP(request) {
     var ip = request.headers['x-forwarded-for'] ||
         request.connection.remoteAddress ||
@@ -116,8 +105,6 @@ function getCallerIP(request) {
     return ip[0];
 }
 
-=======
->>>>>>> 9d1db752392a224f8a6b6134a1bd3ee754a5f5ef
 // http://yourserver/
 app.get('/', function (req, res) {
 	// Use EJS to render main.ejs and send as HTML
