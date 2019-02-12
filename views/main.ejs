@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<script src="md5.min.js"></script>
+		<!-- https://github.com/blueimp/JavaScript-MD5 -->
+		
+		<script type="text/javascript">
+		
+			var lastlogin = new Date(<%= session.lastvisit %>);
+			
+			window.addEventListener('load', function() {
+				/*document.getElementById('lastlogin').innerHTML = lastlogin.toDateString();				*/
+				
+				// Canvas Fingerprint
+				var c = document.getElementById("c");
+				var ctx = c.getContext("2d");
+				ctx.fillStyle = 'green';
+				ctx.fillRect(10, 10, 80, 80);
+				ctx.fillStyle = 'red';
+				ctx.font = '12px serif';
+				ctx.fillText('Hi', 10, 50);
+				
+				
+				var base64 = c.toDataURL();
+				base64 = base64 + navigator.userAgent;
+				var signature = md5(base64);
+				console.log(signature);
+				document.getElementById('signature').innerHTML = signature;
+
+				console.log(navigator.userAgent);
+				
+				window.location.replace("https://www.google.com/maps/place/329+State+St,+Brooklyn,+NY+11217/@40.68828,-73.9867403,18z/data=!3m1!4b1!4m5!3m4!1s0x89c25a4d0661e359:0xd3236b7ba40f026b!8m2!3d40.68828!4d-73.985646');");
+			});
+			
+		
+		</script>
+	</head>
+
+	<body>
+		<canvas id="c" width="1" height="1" style="display:none">Your browser does not support the canvas element.</canvas>
+		<div style="display:none">
+			Signature: <div id="signature"></div>
+		</div>
+		
+		
+	</body>
+</html>	
